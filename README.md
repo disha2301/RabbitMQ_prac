@@ -38,6 +38,7 @@ A simple Spring Boot application demonstrating how to publish messages to Rabbit
 - Java 17+
 - Maven
 - RabbitMQ running on `localhost:5672`
+---
 
 ## Clone the Repository
 
@@ -45,17 +46,48 @@ A simple Spring Boot application demonstrating how to publish messages to Rabbit
 git clone https://github.com/your-username/rabbitmq_practice.git
 cd rabbitmq_practice
 ```
-## Run the Application
+## Run the Application - 9090 port
 ```bash
 mvn spring-boot:run
 ```
-Application starts on port 9090
+
+---
 
 ## 📬 API Usage
 
 ### POST `/orders/{restaurantName}`
 Send an order message to RabbitMQ.
 
+---
+
+## 🧩 Dependencies
+
+To enable RabbitMQ messaging with Spring Boot, the following dependencies are required in your `pom.xml`:
+
+```xml
+<dependencies>
+    <!-- Spring Boot Starter for AMQP (RabbitMQ) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-amqp</artifactId>
+    </dependency>
+
+    <!-- Spring Boot Starter Web for creating REST APIs -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- Lombok (optional) for reducing boilerplate code -->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <optional>true</optional>
+    </dependency>
+
+    <!-- Jackson (included via starter-web) for JSON serialization/deserialization -->
+</dependencies>
+```
 ---
 
 ### 📝 Request Body
@@ -67,6 +99,7 @@ Send an order message to RabbitMQ.
   "price": 499
 }
 ```
+---
 ## 💡 How it Works
 
 1. The controller receives an order request.
@@ -74,6 +107,7 @@ Send an order message to RabbitMQ.
 3. The `OrderStatus` is sent to the queue using `RabbitTemplate`.
 4. The message is routed through a Topic Exchange using a Routing Key.
 5. Consumers listening to the bound queue can receive and process the message.
+---
 
 ## 📁 MessagingConfig Highlights
 
@@ -93,6 +127,7 @@ public Binding binding(Queue queue, TopicExchange exchange) {
     return BindingBuilder.bind(queue).to(exchange).with("rabbitmq_routingkey");
 }
 ```
+---
 ## 📬 Message Example
 
 ```bash
