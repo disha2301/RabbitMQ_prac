@@ -89,6 +89,18 @@ To enable RabbitMQ messaging with Spring Boot, the following dependencies are re
 </dependencies>
 ```
 ---
+## 📬 API Testing with Postman
+
+| Step        | Detail                                                                 |
+|-------------|------------------------------------------------------------------------|
+| **Method**  | `POST`                                                                 |
+| **URL**     | `http://localhost:9090/orders/{restaurantName}`                        |
+| **Headers** | `Content-Type: application/json`                                       |
+| **Body**    | `{ "name": "Pizza", "qty": 2, "price": 499 }`                          |
+| **Example** | `http://localhost:9090/orders/Dominos`                                 |
+| **Tool**    | Use Postman or any REST client                                         |
+| **Response**| `Success`                                                              |
+| **Action**  | Publishes the order message to RabbitMQ queue via Topic Exchange       |
 
 ### 📝 Request Body
 
